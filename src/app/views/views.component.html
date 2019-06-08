@@ -1,0 +1,27 @@
+<header></header>
+<mat-drawer-container>
+    <mat-drawer mode="side" [opened]="menuState$ | async">
+        <mat-nav-list dense class="main-menu">
+            <a mat-list-item [routerLink]="item.path" *ngFor="let item of mainMenu; let i = index">
+                <mat-icon mat-list-icon [svgIcon]="item.icon"></mat-icon>
+                <span matLine>{{item.name}}</span>
+                <button mat-icon-button>
+                    <mat-icon>expand_more</mat-icon>
+                </button>
+            </a>
+        </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div class="router-hierarchy mat-typography">
+            <div class="hierarchy-item" *ngFor="let item of routeHierarchy; let i = index; let last = last">
+                <a [routerLink]="item.path">{{item.name}}</a>
+                <mat-icon *ngIf="!last" inline>chevron_right</mat-icon>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <main>
+            <router-outlet></router-outlet>
+        </main>
+    </mat-drawer-content>
+</mat-drawer-container>
+<footer></footer>

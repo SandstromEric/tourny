@@ -1,0 +1,47 @@
+:host {
+    display: grid;
+    height: 100vh;
+    grid-template-areas:
+    'header'
+    'main' 
+    'footer';
+    grid-template-rows: auto 1fr auto;
+}
+
+header {
+    grid-area: header;
+    z-index: 99;
+}
+
+.mat-drawer-container {
+    grid-area: main;
+
+    .mat-drawer {
+        min-width: 172px;
+    }
+}
+
+main {
+    height: calc(100% - 26px);
+    overflow: auto;
+    scroll-behavior: smooth;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+footer {
+    grid-area: footer;
+}
+
+.router-hierarchy {
+    display: flex;
+    padding: 2px;
+    background: #fff;
+
+    .hierarchy-item {
+        padding-right: 2px;
+        font-size: 14px;
+        a { text-transform: capitalize }
+        .mat-icon { vertical-align: middle }
+    }
+}

@@ -1,0 +1,34 @@
+<mat-toolbar color="primary">
+    <button class="btn" mat-icon-button (click)="setMenuState()">
+        <mat-icon>{{ menuState ? 'arrow_back': 'menu'}}</mat-icon>
+    </button>
+    <h2 class="name">Tourny</h2>
+    <div class="menu">
+        <nav mat-tab-nav-bar color="accent" backgroundColor="primary">
+            <a mat-tab-link *ngFor="let link of mainMenu" [routerLink]="link.path" routerLinkActive
+                #rla="routerLinkActive" [active]="rla.isActive">
+                {{link.name}}
+            </a>
+        </nav>
+    </div>
+    <div class="user">
+        <ng-container *ngIf="auth.user$ | async as user; else Login">
+            <button mat-flat-button [mat-menu-trigger-for]="userMenu" class="user-btn">
+                <img [src]="user.photoURL" alt="" width="18px" height="18px" class="user-photo">
+                <span>{{user.displayName}}</span>
+            </button>
+        </ng-container>
+
+        <ng-template #Login>
+            <button mat-flat-button (click)="login()">Login</button>
+        </ng-template>
+
+    </div>
+</mat-toolbar>
+
+<mat-menu #userMenu="matMenu">
+    <button mat-menu-item (click)="auth.signOut()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
+    </button>
+</mat-menu>

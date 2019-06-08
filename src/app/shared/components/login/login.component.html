@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Login</h1>
+<div mat-dialog-content>
+    <ng-container *ngIf="!(auth.user$ | async); else loggedIn">
+        <button mat-raised-button (click)="auth.googleSignin()">
+            <img src="assets/google-signin/32px-Google__G__Logo.svg.png" alt="" width="18px" height="18px">
+            <span>Sign in with Google</span>
+        </button>
+    </ng-container>
+
+    <ng-template #loggedIn>
+        Already Logged in
+    </ng-template>
+</div>
