@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
     providedIn: 'root'
 })
 export class GeneralService {
-    private menuOpenStateSubject = new BehaviorSubject(true);
+    private menuOpenStateSubject = new BehaviorSubject(false);
 
     constructor() { }
 

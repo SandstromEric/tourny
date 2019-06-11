@@ -1,3 +1,83 @@
-<p>
-  leagues works!
-</p>
+<form [formGroup]="form">
+    <mat-form-field appearance="outline" class="country-field">
+        <mat-label>Country</mat-label>
+        <mat-select formControlName="country">
+            <ng-container *ngFor="let country of contries">
+                <mat-option [value]="country.country" *ngIf="country.flag">
+                    <img *ngIf="country.flag" [src]="country.flag" [alt]="country.country" class="flag">
+                    <span>{{country.country}}</span>
+                </mat-option>
+            </ng-container>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="season-field">
+        <mat-label>Season</mat-label>
+        <mat-select formControlName="season">
+            <ng-container *ngFor="let season of seasons">
+                <mat-option [value]="season">
+                    <span>{{season}}</span>
+                </mat-option>
+            </ng-container>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="league-field">
+        <mat-label>League</mat-label>
+        <mat-select [disabled]="!leagues.length" (selectionChange)="getLeagueTable($event)">
+            <ng-container *ngFor="let league of leagues">
+                <mat-option [value]="league.league_id" *ngIf="league.flag">
+                    <img *ngIf="league.logo" [src]="league.logo" [alt]="league.name" class="logo">
+                    <span>{{league.name}}</span>
+                </mat-option>
+            </ng-container>
+        </mat-select>
+    </mat-form-field>
+</form>
+
+
+<table mat-table #table [dataSource]="leagueTables" *ngIf="leagueTables" class="mat-elevation-z2">
+    <ng-container matColumnDef="rank">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let row"> {{row.rank}} </td>
+    </ng-container>
+    <ng-container matColumnDef="team">
+        <th mat-header-cell *matHeaderCellDef> Team </th>
+        <td mat-cell *matCellDef="let row">
+            <img class="logo" [src]="row.logo" [alt]="row.teamName" width="32">
+            <span>{{row.teamName}} </span>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="played">
+        <th mat-header-cell *matHeaderCellDef> P </th>
+        <td mat-cell *matCellDef="let row"> {{row.all.matchsPlayed}}</td>
+    </ng-container>
+    <ng-container matColumnDef="win">
+        <th mat-header-cell *matHeaderCellDef> W </th>
+        <td mat-cell *matCellDef="let row">{{row.all.win}}</td>
+    </ng-container>
+    <ng-container matColumnDef="draw">
+        <th mat-header-cell *matHeaderCellDef> D </th>
+        <td mat-cell *matCellDef="let row">{{row.all.draw}}</td>
+    </ng-container>
+    <ng-container matColumnDef="lose">
+        <th mat-header-cell *matHeaderCellDef> L </th>
+        <td mat-cell *matCellDef="let row">{{row.all.lose}}</td>
+    </ng-container>
+    <ng-container matColumnDef="goalsFor">
+        <th mat-header-cell *matHeaderCellDef> GF </th>
+        <td mat-cell *matCellDef="let row">{{row.all.goalsFor}}</td>
+    </ng-container>
+    <ng-container matColumnDef="goalsAgainst">
+        <th mat-header-cell *matHeaderCellDef> GA </th>
+        <td mat-cell *matCellDef="let row">{{row.all.goalsAgainst}}</td>
+    </ng-container>
+    <ng-container matColumnDef="goalsDiff">
+        <th mat-header-cell *matHeaderCellDef> GD </th>
+        <td mat-cell *matCellDef="let row">{{row.goalsDiff}}</td>
+    </ng-container>
+    <ng-container matColumnDef="points">
+        <th mat-header-cell *matHeaderCellDef> Pts </th>
+        <td mat-cell *matCellDef="let row"> <strong>{{row.points}}</strong> </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

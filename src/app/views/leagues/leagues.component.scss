@@ -1,0 +1,71 @@
+form {
+    display: grid;
+    grid-template-areas: 
+    'country season'
+    'league league';
+    grid-gap: .5rem;
+    grid-template-columns: minmax(10px, 1fr) minmax(10px, 1fr);
+}
+
+.country-field {
+    grid-area: country;
+}
+
+.season-field {
+    grid-area: season;
+    
+}
+
+.league-field {
+    grid-area: league;
+}
+
+.flag {
+    width: 32px;
+    height: auto;
+    border-radius: 3px;
+    vertical-align: middle;
+    border: 1px solid rgba(0,0,0,0.1);
+    margin-right: .5rem;
+}
+
+.logo {
+    width: 32px;
+    height: auto;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin-right: .5rem;
+}
+
+.mat-table {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.mat-column-played, 
+.mat-column-win, 
+.mat-column-draw, 
+.mat-column-lose, 
+.mat-column-goalsFor,
+.mat-column-goalsAgainst,
+.mat-column-goalsDiff,
+.mat-column-points {
+    padding: 0 2px;
+    text-align: center;
+}
+
+.mat-column-team {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 110px;
+    vertical-align: middle;
+}
+
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type { 
+    padding-left: 1rem;
+}
+
+td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type, th.mat-header-cell:last-of-type {
+    padding-right: 1rem;
+}

@@ -1,0 +1,29 @@
+:host {
+    display: grid;
+    min-height: 100%;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    position: relative;
+}
+
+/* .add-btn {
+    grid-column-start: 2;
+} */
+
+.add-btn {
+    position: fixed;
+    bottom: 3.5rem;
+    right: .5rem;
+}
+
+.my-tournies {
+    grid-row-start: 1;
+}
+
+.mat-card {
+    padding: 0 !important;
+
+    .mat-card-header {
+        padding-top: 1rem;
+    }
+}

@@ -8,6 +8,8 @@ import { MaterialModule } from '../shared/material/material.module';
 import { IconService } from '../shared/services/icon.service';
 import { TourniesComponent } from './tournies/tournies.component';
 import { LeaguesComponent } from './leagues/leagues.component';
+import { TournyDetailComponent } from './tourny-detail/tourny-detail.component';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
@@ -25,13 +27,15 @@ const routes: Routes = [
         DashboardComponent,
         ViewsComponent,
         TourniesComponent,
-        LeaguesComponent
+        LeaguesComponent,
+        TournyDetailComponent
     ],
     imports: [
         CommonModule,
         LayoutModule,
         RouterModule.forRoot(routes),
-        MaterialModule
+        MaterialModule,
+        SharedModule
     ],
     exports: [ViewsComponent]
 })

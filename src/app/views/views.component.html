@@ -1,8 +1,9 @@
 <header></header>
-<mat-drawer-container>
-    <mat-drawer mode="side" [opened]="menuState$ | async">
+<mat-drawer-container (backdropClick)="shouldClose()">
+    <mat-drawer [mode]="menuMode" [opened]="menuState$ | async">
         <mat-nav-list dense class="main-menu">
-            <a mat-list-item [routerLink]="item.path" *ngFor="let item of mainMenu; let i = index">
+            <a mat-list-item [routerLink]="item.path" *ngFor="let item of mainMenu; let i = index"
+                (click)="shouldClose()">
                 <mat-icon mat-list-icon [svgIcon]="item.icon"></mat-icon>
                 <span matLine>{{item.name}}</span>
                 <button mat-icon-button>
