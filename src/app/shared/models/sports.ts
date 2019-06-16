@@ -71,3 +71,41 @@ export interface TeamStats {
     goalsFor: number;
     goalsAgainst: number;
 }
+
+export interface FixturesResponse {
+    resluts: number;
+    fixtures: Fixture[];
+}
+
+export interface Fixture {
+    fixture_id: number;
+    league_id: number;
+    event_date: Date;
+    event_timestamp: number;
+    firstHalfStart: number;
+    secondHalfStart: number;
+    round: string;
+    status: string;
+    statusShort: string;
+    elapsed: number;
+    venue: string;
+    referee: string;
+    homeTeam: {
+        team_id: number;
+        team_name: string;
+        logo: string;
+    };
+    awayTeam: {
+        team_id: number;
+        team_name: string;
+        logo: string;
+    };
+    goalsHomeTeam: number;
+    goalsAwayTeam: number;
+    score: {
+        halftime: string;
+        fulltime: string;
+        extratime: string;
+        penalty: string;
+    }
+}

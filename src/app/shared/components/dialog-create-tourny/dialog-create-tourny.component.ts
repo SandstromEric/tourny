@@ -10,14 +10,19 @@ import { TournamentService } from '../../services/tournament.service';
 export class DialogCreateTournyComponent implements OnInit {
     form: FormGroup;
     competitions$: any;
-
+    maxPlayers = [4, 8, 12, 16, 20, 24, 28, 32]
     constructor(private fb: FormBuilder, private tournyService: TournamentService) { }
 
     ngOnInit() {
         this.competitions$ = this.tournyService.competitions;
         this.form = this.fb.group({
-
+            privacy: [0],
+            maxPlayers: [4]
         })
+    }
+
+    create() {
+        this.tournyService.createTourny(this.form.value)
     }
 
 }

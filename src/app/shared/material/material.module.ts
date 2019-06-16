@@ -29,8 +29,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatBadgeModule } from '@angular/material/badge';
 import { IconService } from '../services/icon.service';
-
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 @NgModule({
     imports: [
         MatCheckboxModule,
@@ -63,7 +65,10 @@ import { IconService } from '../services/icon.service';
         MatSnackBarModule,
         MatTableModule,
         MatSortModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatBadgeModule,
+        ScrollDispatchModule,
+        DragDropModule
     ],
     exports: [
         MatCheckboxModule,
@@ -96,7 +101,10 @@ import { IconService } from '../services/icon.service';
         MatSnackBarModule,
         MatTableModule,
         MatSortModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatBadgeModule,
+        ScrollDispatchModule,
+        DragDropModule
     ],
     providers: [IconService]
 })

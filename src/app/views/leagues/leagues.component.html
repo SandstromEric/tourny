@@ -1,38 +1,39 @@
-<form [formGroup]="form">
-    <mat-form-field appearance="outline" class="country-field">
-        <mat-label>Country</mat-label>
-        <mat-select formControlName="country">
-            <ng-container *ngFor="let country of contries">
-                <mat-option [value]="country.country" *ngIf="country.flag">
-                    <img *ngIf="country.flag" [src]="country.flag" [alt]="country.country" class="flag">
-                    <span>{{country.country}}</span>
-                </mat-option>
-            </ng-container>
-        </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="season-field">
-        <mat-label>Season</mat-label>
-        <mat-select formControlName="season">
-            <ng-container *ngFor="let season of seasons">
-                <mat-option [value]="season">
-                    <span>{{season}}</span>
-                </mat-option>
-            </ng-container>
-        </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="league-field">
-        <mat-label>League</mat-label>
-        <mat-select [disabled]="!leagues.length" (selectionChange)="getLeagueTable($event)">
-            <ng-container *ngFor="let league of leagues">
-                <mat-option [value]="league.league_id" *ngIf="league.flag">
-                    <img *ngIf="league.logo" [src]="league.logo" [alt]="league.name" class="logo">
-                    <span>{{league.name}}</span>
-                </mat-option>
-            </ng-container>
-        </mat-select>
-    </mat-form-field>
-</form>
-
+<mat-card>
+    <form [formGroup]="form" class="league-filter">
+        <mat-form-field appearance="outline" class="country-field">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="country">
+                <ng-container *ngFor="let country of contries">
+                    <mat-option [value]="country.country" *ngIf="country.flag">
+                        <img *ngIf="country.flag" [src]="country.flag" [alt]="country.country" class="flag">
+                        <span>{{country.country}}</span>
+                    </mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="season-field">
+            <mat-label>Season</mat-label>
+            <mat-select formControlName="season">
+                <ng-container *ngFor="let season of seasons">
+                    <mat-option [value]="season">
+                        <span>{{season}}</span>
+                    </mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="league-field">
+            <mat-label>League</mat-label>
+            <mat-select [disabled]="!leagues.length" (selectionChange)="getLeagueTable($event)">
+                <ng-container *ngFor="let league of leagues">
+                    <mat-option [value]="league.league_id" *ngIf="league.flag">
+                        <img *ngIf="league.logo" [src]="league.logo" [alt]="league.name" class="logo">
+                        <span>{{league.name}}</span>
+                    </mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</mat-card>
 
 <table mat-table #table [dataSource]="leagueTables" *ngIf="leagueTables" class="mat-elevation-z2">
     <ng-container matColumnDef="rank">

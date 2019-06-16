@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment'
 import { map, tap } from 'rxjs/operators';
-import { Country, SportResponse, CountriesResponse, LeaguesResponse, League, SeasonsResponse, StandingResponse } from '../models/sports';
+import { Country, SportResponse, CountriesResponse, LeaguesResponse, League, SeasonsResponse, StandingResponse, FixturesResponse, Fixture } from '../models/sports';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -18,33 +19,49 @@ export class SportService {
 
     constructor(private http: HttpClient) { }
 
-    /* getleagues() {
-        return this.http.get<SportResponse>(this.requestUrl + 'leagues/country/sweden/2019', { headers: this.headers }).pipe(
-            map(data => data.api)
+    public getLeagues(finishedSeasons = true): Promise<League[]> {
+        return this.getApi<SportResponse<LeaguesResponse>>(`leagues`).pipe(
+            map(data => {
+                if (!finishedSeasons) return data.api.leagues.filter(league => new Date() < new Date(league.season_end));
+                else return data.api.leagues;
+            })
         ).toPromise();
-    } */
+    }
 
-    getLeaguesByCountry(country: string, season: number): Promise<League[]> {
-        return this.http.get<SportResponse<LeaguesResponse>>(this.requestUrl + `leagues/country/${country}/${season}`, { headers: this.headers }).pipe(
+    public getLeaguesByCountry(country: string, season: number): Promise<League[]> {
+        return this.getApi<SportResponse<LeaguesResponse>>(`leagues/country/${country}/${season}`).pipe(
             map(data => data.api.leagues)
         ).toPromise();
     }
 
-    getLeagueTable(leagueId: number) {
-        return this.http.get<SportResponse<StandingResponse>>(this.requestUrl + `leagueTable/${leagueId}`, { headers: this.headers }).pipe(
+    public getLeagueTable(leagueId: number) {
+        return this.getApi<SportResponse<StandingResponse>>(`leagueTable/${leagueId}`).pipe(
             map(data => data.api.standings)
         ).toPromise();
     }
 
-    getCountries(): Promise<Country[]> {
-        return this.http.get<SportResponse<CountriesResponse>>(this.requestUrl + `countries`, { headers: this.headers }).pipe(
+    public getCountries(): Promise<Country[]> {
+        return this.getApi<SportResponse<CountriesResponse>>(`countries`).pipe(
             map(data => data.api.countries)
         ).toPromise();
     }
 
-    getSeasons(): Promise<number[]> {
-        return this.http.get<SportResponse<SeasonsResponse>>(this.requestUrl + `seasons`, { headers: this.headers }).pipe(
+    public getSeasons(): Promise<number[]> {
+        return this.getApi<SportResponse<SeasonsResponse>>(`seasons`).pipe(
             map(data => data.api.seasons)
         ).toPromise();
+    }
+
+    public getLeagueFixtures(leagueId: number, onlyNext = false): Promise<Fixture[]> {
+        return this.getApi<SportResponse<FixturesResponse>>(`fixtures/league/${leagueId}`).pipe(
+            map(data => {
+                if (onlyNext) return data.api.fixtures.filter(fixture => fixture.statusShort === 'NS')
+                else return data.api.fixtures
+            })
+        ).toPromise()
+    }
+
+    private getApi<T>(url: string): Observable<T> {
+        return this.http.get<T>(this.requestUrl + url, { headers: this.headers });
     }
 }

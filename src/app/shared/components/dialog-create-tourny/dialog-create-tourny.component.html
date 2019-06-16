@@ -1,13 +1,20 @@
 <h2 mat-dialog-title>Create Tourny</h2>
-<div mat-dialog-content>
-    <mat-checkbox>Private</mat-checkbox> <br />
+<div mat-dialog-content [formGroup]="form">
     <mat-form-field appearance="outline">
-        <mat-label>League</mat-label>
-        <mat-select>
-            <mat-option *ngFor="let comp of competitions$ | async" [value]="comp.id">{{comp.caption}}</mat-option>
+        <mat-label>Privacy</mat-label>
+        <mat-select formControlName="privacy">
+            <mat-option [value]="0">Public</mat-option>
+            <mat-option [value]="1">Private</mat-option>
+            <mat-option [value]="2">Invitation Required</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Max Players</mat-label>
+        <mat-select formControlName="maxPlayers">
+            <mat-option *ngFor="let players of maxPlayers" [value]="players">{{players}} Players</mat-option>
         </mat-select>
     </mat-form-field>
 </div>
 <div mat-dialog-actions>
-    <button mat-flat-button color="primary">Create</button>
+    <button mat-flat-button color="primary" (click)="create()">Create</button>
 </div>

@@ -10,11 +10,16 @@ import { TourniesComponent } from './tournies/tournies.component';
 import { LeaguesComponent } from './leagues/leagues.component';
 import { TournyDetailComponent } from './tourny-detail/tourny-detail.component';
 import { SharedModule } from '../shared/shared.module';
+import { TournyMatchMakerComponent } from './tourny-detail/tourny-match-maker/tourny-match-maker.component';
 
 const routes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
     {
-        path: 'tournies', component: TourniesComponent
+        path: 'tourny', children: [
+            { path: 'list', component: TourniesComponent },
+            { path: ':id', component: TournyDetailComponent },
+            { path: '**', redirectTo: 'list', pathMatch: 'full' },
+        ]
     },
     {
         path: 'leagues', component: LeaguesComponent
@@ -28,7 +33,8 @@ const routes: Routes = [
         ViewsComponent,
         TourniesComponent,
         LeaguesComponent,
-        TournyDetailComponent
+        TournyDetailComponent,
+        TournyMatchMakerComponent
     ],
     imports: [
         CommonModule,

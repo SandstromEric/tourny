@@ -5,8 +5,8 @@
     <mat-card-content>
         <mat-divider></mat-divider>
         <mat-action-list *ngIf="myTournaments$ | async as tournies" dense>
-            <mat-list-item *ngFor="let tourny of tournies">
-                {{tourny.league.caption}}
+            <mat-list-item *ngFor="let tourny of tournies" (click)="gotoTourny(tourny)">
+                <span matLine>{{tourny.name}}</span><span>0/{{tourny.maxPlayers}}</span>
                 <mat-divider></mat-divider>
             </mat-list-item>
         </mat-action-list>
@@ -20,11 +20,10 @@
     <mat-card-content>
         <mat-divider></mat-divider>
         <mat-action-list *ngIf="tournaments$ | async as tournies" dense>
-            <mat-list-item *ngFor="let tourny of tournies">
-                {{tourny.league.caption}}
+            <mat-list-item *ngFor="let tourny of tournies" (click)="gotoTourny(tourny)">
+                <span matLine>{{tourny.name}}</span><span>{{tourny.maxPlayers}}</span>
                 <mat-divider></mat-divider>
             </mat-list-item>
-
         </mat-action-list>
     </mat-card-content>
 </mat-card>

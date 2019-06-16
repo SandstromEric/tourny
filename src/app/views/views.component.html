@@ -13,13 +13,13 @@
         </mat-nav-list>
     </mat-drawer>
     <mat-drawer-content>
-        <div class="router-hierarchy mat-typography">
+        <!-- <div class="router-hierarchy mat-typography">
             <div class="hierarchy-item" *ngFor="let item of routeHierarchy; let i = index; let last = last">
                 <a [routerLink]="item.path">{{item.name}}</a>
                 <mat-icon *ngIf="!last" inline>chevron_right</mat-icon>
             </div>
         </div>
-        <mat-divider></mat-divider>
+        <mat-divider></mat-divider> -->
         <main>
             <router-outlet></router-outlet>
         </main>

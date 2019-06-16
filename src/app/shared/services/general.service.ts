@@ -27,7 +27,7 @@ export class GeneralService {
             {
                 name: 'Tournies',
                 icon: 'fas:trophy',
-                path: ['tournies']
+                path: ['tourny/list']
             },
             {
                 name: 'Leagues',

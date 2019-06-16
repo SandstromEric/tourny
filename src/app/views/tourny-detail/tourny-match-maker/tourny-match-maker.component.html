@@ -1,0 +1,113 @@
+<mat-card *ngIf="!tourny.published" class="not-published">
+    <mat-icon color="warn">warning</mat-icon>
+    <span>
+        This Tournament is not yet published. <br />
+        Create your matchpool to publish down below!
+    </span>
+</mat-card>
+<mat-vertical-stepper #stepper class="mat-elevation-z2">
+    <mat-step>
+        <form [formGroup]="form">
+            <ng-template matStepLabel>Select the way to play</ng-template>
+            <div class="match-maker">
+                <mat-form-field appearance="outline" class="playstyle">
+                    <mat-label>Playstyle</mat-label>
+                    <mat-select #playstyle formControlName="playstyle">
+                        <mat-option [value]="1">Pick and Mix</mat-option>
+                        <mat-option [value]="2">League Play</mat-option>
+                    </mat-select>
+                    <mat-hint>
+                        <ng-container *ngIf="playstyle.value === 1">
+                            Pick your own matches across multiple leagues
+                        </ng-container>
+                        <ng-container *ngIf="playstyle.value === 2">
+                            Play all remaining matches in a specific league
+                        </ng-container>
+                    </mat-hint>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="leagues" *ngIf="form.value.playstyle === 1">
+                    <mat-label>Leagues</mat-label>
+                    <mat-select (selectionChange)="getLeagueMatches($event)" multiple>
+                        <mat-option *ngFor="let league of leagues" [value]="league.league_id">
+                            {{league.name}} - {{league.country}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="leagues" *ngIf="form.value.playstyle === 2">
+                    <mat-label>League</mat-label>
+                    <mat-select (selectionChange)="getLeagueMatches($event)">
+                        <mat-option *ngFor="let league of leagues" [value]="league.league_id">
+                            {{league.name}} - {{league.country}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="matches" [matBadge]="filteredMatches.length" matBadgePosition="before">
+                    <cdk-virtual-scroll-viewport itemSize="72" class="league-matches">
+                        <ng-container *cdkVirtualFor="let item of filteredMatches">
+                            <div class="league-match" (click)="addToPool(item)">
+                                <div class="home-team">
+                                    <img [src]="item.homeTeam.logo">
+                                    <h6>{{item.homeTeam.team_name}}</h6>
+                                </div>
+                                <div class="versus">
+                                    <span>vs</span>
+                                </div>
+                                <div class="away-team">
+                                    <img [src]="item.awayTeam.logo">
+                                    <h6>{{item.awayTeam.team_name}}</h6>
+                                </div>
+                                <div class="date">
+                                    <h6>{{item.event_date | date:'MMM d, y, h:mm a'}}</h6>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </cdk-virtual-scroll-viewport>
+                </div>
+                <div class="pool" [matBadge]="matchPool.length">
+                    <cdk-virtual-scroll-viewport itemSize="71" class="league-matches">
+                        <ng-container *cdkVirtualFor="let item of pool$; let i = index">
+                            <div class="league-match" (click)="removeFromPool(item, i)">
+                                <div class="home-team">
+                                    <img [src]="item.homeTeam.logo">
+                                    <h6>{{item.homeTeam.team_name}}</h6>
+                                </div>
+                                <div class="versus">
+                                    <span>vs</span>
+                                </div>
+                                <div class="away-team">
+                                    <img [src]="item.awayTeam.logo">
+                                    <h6>{{item.awayTeam.team_name}}</h6>
+                                </div>
+                                <div class="date">
+                                    <h6>{{item.event_date | date:'MMM d, y, h:mm a'}}</h6>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </cdk-virtual-scroll-viewport>
+                </div>
+            </div>
+
+            <div>
+                <button mat-flat-button color="primary" matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <form>
+            <ng-template matStepLabel>Tournament Settings</ng-template>
+
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Publish</ng-template>
+        You are now done.
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="publishTourny()">Publish</button>
+        </div>
+    </mat-step>
+</mat-vertical-stepper>

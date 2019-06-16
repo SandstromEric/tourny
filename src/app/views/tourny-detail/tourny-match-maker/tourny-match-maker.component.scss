@@ -1,0 +1,87 @@
+.match-maker {
+    display: grid;
+    grid-template-areas:
+    'playstyle leagues'
+    'matches pool';
+    grid-auto-columns: minmax(40px, 1fr);
+    grid-gap: 1rem;
+}
+
+.playstyle {
+    grid-area: playstyle;
+}
+
+.leagues {
+    grid-area: leagues;
+}
+
+.matches {
+    grid-area: matches;
+}
+
+.pool {
+    grid-area: pool;
+}
+
+.league-matches {
+    height: 288px;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 5px;
+}
+
+.league-match {
+    height: 72px;
+    display: grid;
+    grid-template-areas: 
+    'date date date'
+    'hometeam vs awayteam';
+    grid-auto-columns: 1fr 20px 1fr;
+    grid-auto-rows: 20px 50px;
+    align-items: center;
+    justify-items: center;
+    padding: 0 .5rem;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+    cursor: cursor;
+
+    .home-team {
+        display: grid;
+        grid-area: hometeam;
+        justify-items: center;
+    }
+
+    .away-team {
+        display: grid;
+        grid-area: awayteam;
+        justify-items: center;
+    }
+
+    .versus {
+        grid-area: vs;
+        
+        span {
+            background: #263238;
+            color: #fff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: block;
+            text-align: center;
+        }
+    }
+
+    .date {
+        grid-area: date;
+    }
+
+    img {
+        height: 30px;
+    }
+
+    h6 {
+        margin: 0;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 100%;
+    }
+}

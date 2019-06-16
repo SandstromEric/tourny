@@ -22,10 +22,9 @@ header {
 }
 
 main {
-    height: calc(100% - 26px);
+    height: calc(100%);
     overflow: auto;
     scroll-behavior: smooth;
-    padding: 1rem;
     box-sizing: border-box;
 }
 
