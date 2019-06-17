@@ -17,7 +17,6 @@ export class TournyDetailComponent implements OnInit {
     tourny$: any;
     matches$: any;
     id: number;
-
     constructor(
         private route: ActivatedRoute,
         private tournyService: TournamentService,

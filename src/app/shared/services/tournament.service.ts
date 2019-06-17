@@ -46,6 +46,7 @@ export class TournamentService {
             createdBy: user.uid,
             admins: [user.uid],
             published: null,
+            matchPool: [],
             name: 'New Tournament by ' + user.displayName
         }).then(doc => {
             this.router.navigate(['./tourny', doc.id])
@@ -73,5 +74,18 @@ export class TournamentService {
     getTournyFixtures(ids) {
         const reads = ids.map(id => this.db.collection('fixtures').doc(id.toString()).valueChanges());
         return combineLatest(reads);
+    }
+
+    getMyPredictions(tournyId: string) {
+        return this.authService.user$.pipe(
+            switchMap(user => this.db.collection(`tournaments/${tournyId}/participants/${user.uid}/predictions`).valueChanges({ idField: 'id' }))
+        )
+    }
+
+    async setMatchScores(tournyId: string, fixtureId: number | string, data: any) {
+        let user = await this.authService.user$.pipe(take(1)).toPromise();
+        this.db.doc(`tournaments/${tournyId}/participants/${user.uid}/predictions/${fixtureId}`).set({
+            ...data
+        })
     }
 }

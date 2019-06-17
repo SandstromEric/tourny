@@ -11,6 +11,7 @@ import { LeaguesComponent } from './leagues/leagues.component';
 import { TournyDetailComponent } from './tourny-detail/tourny-detail.component';
 import { SharedModule } from '../shared/shared.module';
 import { TournyMatchMakerComponent } from './tourny-detail/tourny-match-maker/tourny-match-maker.component';
+import { TournyPredictionsComponent } from './tourny-detail/tourny-predictions/tourny-predictions.component';
 
 const routes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
@@ -34,7 +35,8 @@ const routes: Routes = [
         TourniesComponent,
         LeaguesComponent,
         TournyDetailComponent,
-        TournyMatchMakerComponent
+        TournyMatchMakerComponent,
+        TournyPredictionsComponent
     ],
     imports: [
         CommonModule,
