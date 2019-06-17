@@ -4,7 +4,7 @@ import { AuthenticationService } from './authentication.service';
 import { switchMap, take, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Fixture } from '../models/sports';
-import { combineLatest, forkJoin } from 'rxjs';
+import { combineLatest, forkJoin, of } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -19,14 +19,14 @@ export class TournamentService {
     get tournies() {
         return this.authService.user$.pipe(
             switchMap(user => this.db.collection('tournaments').valueChanges({ idField: 'id' }).pipe(
-                map(tournies => tournies.filter(tourny => !tourny['admins'].includes(user.uid)))
+                map(tournies => tournies.filter(tourny => !tourny['admins'].includes(user ? user.uid : 'willneverind')))
             ))
         );
     }
 
     get myTournies() {
         return this.authService.user$.pipe(
-            switchMap(user => this.db.collection('tournaments', ref => ref.where('admins', 'array-contains', user.uid)).valueChanges({ idField: 'id' }))
+            switchMap(user => this.db.collection('tournaments', ref => ref.where('admins', 'array-contains', user ? user.uid : 'willneverFind')).valueChanges({ idField: 'id' }))
         );
     }
 
