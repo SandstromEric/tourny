@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TournamentService } from 'src/app/shared/services/tournament.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-    constructor() { }
+    constructor(private tournamentService: TournamentService) { }
 
     ngOnInit() {
+        this.tournamentService.getLiveFixtures().subscribe(data => console.log(data))
+        this.tournamentService.getMatchesToday().subscribe(data => console.log(data))
     }
 
 }

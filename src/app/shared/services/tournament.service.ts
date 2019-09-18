@@ -14,12 +14,13 @@ export class TournamentService {
     constructor(
         private db: AngularFirestore,
         private authService: AuthenticationService,
-        private router: Router) { }
+        private router: Router) {
+    }
 
     get tournies() {
         return this.authService.user$.pipe(
             switchMap(user => this.db.collection('tournaments').valueChanges({ idField: 'id' }).pipe(
-                map(tournies => tournies.filter(tourny => !tourny['admins'].includes(user ? user.uid : 'willneverind')))
+                map(tournies => tournies.filter(tourny => !tourny['admins'].includes(user ? user.uid : 'willneverFind')))
             ))
         );
     }
@@ -65,7 +66,11 @@ export class TournamentService {
 
         matchpool.map(match => {
             const matchRef = this.db.firestore.collection('fixtures').doc(`${match.fixture_id}`);
-            batch.set(matchRef, { ...match }, { merge: true });
+            batch.set(matchRef, {
+                ...match,
+                event_date: new Date(match.event_date),
+                event_timestamp: new Date(match.event_timestamp)
+            }, { merge: true });
         });
 
         batch.commit();
@@ -80,6 +85,18 @@ export class TournamentService {
         return this.authService.user$.pipe(
             switchMap(user => this.db.collection(`tournaments/${tournyId}/participants/${user.uid}/predictions`).valueChanges({ idField: 'id' }))
         )
+    }
+
+    getLiveFixtures() {
+        return this.db.collection('fixtures', ref => ref.where('live', '==', true)).valueChanges();
+    }
+
+    getMatchesToday() {
+        const start = new Date();
+        start.setHours(0, 0, 0, 0);
+        const end = new Date();
+        end.setHours(23, 59, 59, 999);
+        return this.db.collection('fixtures', ref => ref.where('event_date', '>', start).where('event_date', '<', end)).valueChanges();
     }
 
     async setMatchScores(tournyId: string, fixtureId: number | string, data: any) {
